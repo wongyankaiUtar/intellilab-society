@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="IntelliLab Society is the AI &amp; Innovation Club — hands-on workshops in prompt engineering, machine learning, NLP and computer vision, student project showcases and innovation challenges.">
+<meta name="author" content="IntelliLab Society">
+<title>IntelliLab Society — AI &amp; Innovation Club</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366F1'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>i</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+<div class="scroll-progress"></div>
+
+<!-- ===================== SHARED NAVBAR (identical on all 8 pages) ======= -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">iL</span>
+      <span>IntelliLab Society<span class="brand__sub">AI &amp; Innovation Club</span></span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Main navigation">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="workshops.html">Workshops</a>
+      <a class="nav__link" href="projects.html">Projects</a>
+      <a class="nav__link" href="events.html">Events</a>
+      <a class="nav__link" href="gallery.html">Gallery</a>
+      <a class="nav__link" href="blog.html">AI News</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle colour theme"></button>
+
+      <!-- Signed out: shown only to guests -->
+      <button class="btn btn--primary btn--sm" type="button" data-auth-guest data-open-auth="signin" hidden>Sign in</button>
+
+      <!-- Signed in: member menu -->
+      <div class="usermenu" data-auth-user hidden>
+        <button class="usermenu__trigger" id="userMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="userMenuPanel">
+          <span class="usermenu__avatar" data-user-initials aria-hidden="true">?</span>
+          <span class="usermenu__name" data-user-name>Member</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="usermenu__panel" id="userMenuPanel" role="menu">
+          <div class="usermenu__head">
+            <strong data-user-fullname>Member</strong>
+            <span data-user-email>member@example.com</span>
+          </div>
+          <a class="usermenu__item" role="menuitem" href="profile.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            My profile
+          </a>
+          <a class="usermenu__item" role="menuitem" href="profile.html#saved">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            Saved items
+            <span class="usermenu__badge" data-saved-count>0</span>
+          </a>
+          <a class="usermenu__item" role="menuitem" href="profile.html#registrations">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+            My registrations
+          </a>
+          <div class="usermenu__sep"></div>
+          <button class="usermenu__item usermenu__item--danger" role="menuitem" type="button" data-sign-out>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+
+      <button class="icon-btn nav__toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===================== HERO ========================================== -->
+<section class="hero">
+  <div class="hero__grid" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <div class="reveal is-in">
+      <span class="chip chip--cyan chip--dot mb-3">Open for 2026 intake</span>
+      <h1>Learn AI by <span class="gradient-text">building it</span>, not just reading about it.</h1>
+      <p class="lead">IntelliLab Society is a student-run AI &amp; Innovation Club. We run hands-on workshops in prompt engineering, machine learning, NLP and computer vision — then turn what you learn into real projects and innovation challenges.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="events.html">
+          Register for an event
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="projects.html">Browse student projects</a>
+      </div>
+
+      <!-- Personalised greeting powered by COOKIES -->
+      <div class="card card--flat" style="padding:1.1rem 1.25rem">
+        <div class="flex-between">
+          <div>
+            <p class="small mb-0" style="color:var(--text);font-weight:600" data-greeting>Welcome!</p>
+            <p class="tiny mb-0">No account needed — we recognise you on this device.</p>
+          </div>
+          <button class="btn btn--line btn--sm" type="button" id="setNameBtn">Set my name</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original CSS/SVG artwork — no stock photography anywhere on this site -->
+    <div class="hero__art reveal is-in" aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6366F1"/><stop offset="100%" stop-color="#22D3EE"/>
+          </linearGradient>
+          <radialGradient id="glow"><stop offset="0%" stop-color="#6366F1" stop-opacity=".55"/><stop offset="100%" stop-color="#6366F1" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="200" cy="200" r="170" fill="url(#glow)"/>
+        <g class="spin-slow" stroke="url(#g1)" fill="none" stroke-width="1.2" opacity=".55">
+          <circle cx="200" cy="200" r="150" class="dash"/>
+          <circle cx="200" cy="200" r="112"/>
+        </g>
+        <!-- neural net -->
+        <g stroke="url(#g1)" stroke-width="1.1" opacity=".65">
+          <path d="M80 130 L190 90 M80 130 L190 200 M80 200 L190 90 M80 200 L190 200 M80 270 L190 200 M80 270 L190 310"/>
+          <path d="M190 90 L300 140 M190 200 L300 140 M190 200 L300 250 M190 310 L300 250"/>
+        </g>
+        <g fill="#0A0E1A" stroke="url(#g1)" stroke-width="2.4">
+          <circle cx="80" cy="130" r="13"/><circle cx="80" cy="200" r="13"/><circle cx="80" cy="270" r="13"/>
+          <circle cx="190" cy="90" r="15"/><circle cx="190" cy="200" r="15"/><circle cx="190" cy="310" r="15"/>
+          <circle cx="300" cy="140" r="17"/><circle cx="300" cy="250" r="17"/>
+        </g>
+        <g fill="#22D3EE">
+          <circle cx="190" cy="200" r="5" class="pulse"/>
+          <circle cx="300" cy="140" r="5" class="pulse" style="animation-delay:.7s"/>
+          <circle cx="80" cy="270" r="5" class="pulse" style="animation-delay:1.3s"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ========================================= -->
+<section class="section section--tight section--alt">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><span class="stat__num gradient-text" data-count="412">0</span><span class="stat__label">Active members</span></div>
+      <div class="stat reveal" data-d="1"><span class="stat__num gradient-text" data-count="38">0</span><span class="stat__label">Workshops delivered</span></div>
+      <div class="stat reveal" data-d="2"><span class="stat__num gradient-text" data-count="64">0</span><span class="stat__label">Student projects shipped</span></div>
+      <div class="stat reveal" data-d="3"><span class="stat__num gradient-text" data-count="11">0</span><span class="stat__label">Hackathons hosted</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT WE DO ==================================== -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">What we do</span>
+      <h2>Four tracks, one community</h2>
+      <p class="lead">Most club sites we studied covered a single narrow topic. We deliberately span the whole field so every member finds a way in.</p>
+    </div>
+    <div class="grid grid-4">
+      <article class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><rect x="8" y="8" width="8" height="8" rx="2"/></svg></div>
+        <h3>Prompt Engineering</h3>
+        <p>Structured prompting, evaluation, chain-of-thought and agent design — with copy-paste starter prompts you can run the same day.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l4-8 4 5 3-6 4 9"/><path d="M3 21h18"/></svg></div>
+        <h3>Machine Learning</h3>
+        <p>From regression to transformers. Every session ships with a notebook and a real dataset — no theory-only lectures.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/></svg></div>
+        <h3>NLP &amp; Language</h3>
+        <p>Tokenisation, embeddings, retrieval-augmented generation and building assistants that actually answer correctly.</p>
+      </article>
+      <article class="card reveal" data-d="3">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg></div>
+        <h3>Computer Vision</h3>
+        <p>Detection, segmentation and on-device inference — including an ethics module on surveillance and consent.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PERSONALISATION / STORAGE DEMO ================= -->
+<section class="section section--alt" id="personalise">
+  <div class="wrap">
+    <div class="grid grid-2" style="align-items:center;gap:clamp(2rem,5vw,3.5rem)">
+      <div class="reveal">
+        <span class="eyebrow">Built for you</span>
+        <h2>The site remembers you — <span class="gradient-text">no account needed</span></h2>
+        <p class="lead">Every website we reviewed showed identical content to everyone and forgot you the moment you left. IntelliLab picks up where you left off — without ever asking you to create an account.</p>
+
+        <div class="stack mt-3">
+          <div class="card card--flat" style="padding:1.1rem 1.25rem">
+            <div class="flex" style="gap:.9rem;align-items:flex-start">
+              <span class="chip chip--brand">Your look</span>
+              <p class="small mb-0">Light or dark, and the name you go by. We keep it for 30 days, so it is still here even after you close the browser completely.</p>
+            </div>
+          </div>
+          <div class="card card--flat" style="padding:1.1rem 1.25rem">
+            <div class="flex" style="gap:.9rem;align-items:flex-start">
+              <span class="chip chip--cyan">Your shortlist</span>
+              <p class="small mb-0">Projects and workshops you bookmark. You have <strong data-saved-count>0</strong> saved right now, and they stay until you clear them.</p>
+            </div>
+          </div>
+          <div class="card card--flat" style="padding:1.1rem 1.25rem">
+            <div class="flex" style="gap:.9rem;align-items:flex-start">
+              <span class="chip chip--amber">Your drafts</span>
+              <p class="small mb-0">Half-finished registration and contact forms. Wander off to another page and come back — your text is still waiting. Closing the tab clears it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap mt-3" style="gap:.7rem">
+          <button class="btn btn--primary btn--sm" type="button" data-open-storage>See what's saved</button>
+          <button class="btn btn--line btn--sm" type="button" id="resetVisitor">Forget me</button>
+        </div>
+      </div>
+
+      <div class="card card--pad-lg reveal" data-d="1">
+        <h4 class="mb-3">Try it right now</h4>
+        <div class="field">
+          <label for="displayName">What should we call you?</label>
+          <input class="input" type="text" id="displayName" placeholder="e.g. Jane Tan" maxlength="24">
+          <span class="hint">We'll greet you by name next time you visit.</span>
+        </div>
+        <button class="btn btn--primary btn--block" type="button" id="saveName">Save</button>
+        <hr style="border:0;border-top:1px solid var(--border);margin:1.5rem 0">
+        <h5 class="mb-2">What we remember about you</h5>
+        <dl class="kv" id="livePreview">
+          <dt>Appearance</dt><dd id="pvTheme">—</dd>
+          <dt>Your name</dt><dd id="pvName">—</dd>
+          <dt>Visits</dt><dd id="pvVisits">—</dd>
+          <dt>Shortlisted</dt><dd id="pvSaved">—</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NEXT UP (live countdown) ======================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="card card--pad-lg reveal">
+      <div class="flex-between mb-3">
+        <div>
+          <span class="eyebrow">Next up</span>
+          <h2 style="margin-bottom:.4rem" id="homeEventName">—</h2>
+          <p class="small mb-1" id="homeEventWhen" style="color:var(--text);font-weight:600">—</p>
+          <p class="small mb-0">A live countdown that always shows a real, upcoming date — it rolls forward automatically and never sits at zero.</p>
+        </div>
+        <a class="btn btn--primary" href="events.html">See all events</a>
+      </div>
+      <div class="countdown" id="homeCountdown" role="timer" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY DIFFERENT ================================= -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">Why we're different</span>
+      <h2>We fixed what the other club sites got wrong</h2>
+      <p class="lead">Our team reviewed four existing AI club and AI education websites. Every gap we found became a feature here.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>Content that updates itself</h4>
+        <p>Those sites relied on someone remembering to update them, so information went stale — one even had a countdown frozen at 00:00:00. Our AI News page refreshes itself every time you open it.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>You can actually sign up</h4>
+        <p>Most offered a single email address and nothing else. We have validated registration and contact forms that keep your draft as you type.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>Real people, real credibility</h4>
+        <p>One club site had no About page or committee at all. Ours introduces every officer, our history, and how to reach us.</p>
+      </article>
+      <article class="card reveal">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>Search and filter everywhere</h4>
+        <p>Finding a specific resource meant scrolling forever. Workshops, projects, gallery and news are all filterable and searchable.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>Genuinely responsive</h4>
+        <p>One reviewed site misaligned badly at other resolutions. Ours is built mobile-first on a fluid grid and tested from 360px upward.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="chip chip--green chip--dot mb-2">Fixed</span>
+        <h4>Social, not siloed</h4>
+        <p>None of them embedded social media. Our Contact page carries a live social feed and one-tap sharing on every article.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW THIS SITE WORKS ==========================
+     The single place on the site where the underlying technology is named.
+     Everything else speaks plain English to visitors; the technical detail
+     lives here and in the storage inspector, clearly signposted as such.
+     ================================================================== -->
+<section class="section" id="how-it-works">
+  <div class="wrap">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">For the curious</span>
+      <h2>How this site works</h2>
+      <p class="lead">We are an AI club, so it would be odd to hide the engineering. Here is what runs underneath — and what we do with your data, which is very little.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <span class="chip chip--brand mb-2">Cookies</span>
+        <h4>Your appearance and name</h4>
+        <p>Your light/dark choice, the name you gave us and a visit counter are stored in cookies with a 30-day expiry. Cookies are the only one of the three that survives closing the browser entirely.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="chip chip--cyan mb-2">localStorage</span>
+        <h4>Your shortlist and account</h4>
+        <p>Bookmarked projects and workshops, plus your member account if you created one, live in localStorage. It persists indefinitely on this device until you clear it.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="chip chip--amber mb-2">sessionStorage</span>
+        <h4>Your unfinished forms</h4>
+        <p>Draft registration and contact forms use sessionStorage, which the browser wipes when the tab closes. On a shared lab machine that means your details are never left behind.</p>
+      </article>
+      <article class="card reveal">
+        <span class="chip chip--green mb-2">REST APIs</span>
+        <h4>Content that updates itself</h4>
+        <p>The AI News page queries the Hacker News API and the Projects page queries the GitHub API, both through jQuery <code>$.ajax()</code>. Nobody on the committee edits those sections by hand.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="chip mb-2">Front end</span>
+        <h4>HTML5, CSS3, JavaScript</h4>
+        <p>One stylesheet drives all nine pages, built on a fluid grid with CSS custom properties for theming. Every illustration is hand-written SVG rather than stock photography.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="chip mb-2">Privacy</span>
+        <h4>Nothing leaves your browser</h4>
+        <p>There is no server and no analytics. Everything described above is stored on your own device, and you can inspect or delete all of it at any time.</p>
+      </article>
+    </div>
+
+    <div class="text-center mt-4 reveal">
+      <button class="btn btn--primary" type="button" data-open-storage>Inspect everything stored on your device</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA =========================================== -->
+<section class="section">
+  <div class="wrap">
+    <div class="card card--pad-lg text-center reveal" style="background:linear-gradient(135deg, rgba(99,102,241,.16), rgba(34,211,238,.10))">
+      <h2 class="mb-2">Ready to build something?</h2>
+      <p class="lead" style="max-width:52ch;margin:0 auto 1.8rem">Membership is free for all students. Come to one session, no commitment — most people stay.</p>
+      <div class="flex-center flex-wrap">
+        <a class="btn btn--primary" href="contact.html">Join the club</a>
+        <a class="btn btn--ghost" href="workshops.html">See the workshop schedule</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== SHARED FOOTER (identical on all 8 pages) ======= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand mb-3" href="index.html">
+          <span class="brand__mark" aria-hidden="true">iL</span>
+          <span>IntelliLab Society<span class="brand__sub">AI &amp; Innovation Club</span></span>
+        </a>
+        <p class="small">A student-run community for artificial intelligence, machine learning and innovation. Open to every faculty, no prior experience needed.</p>
+        <div class="socials mt-3">
+          <a class="social" href="contact.html" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a class="social" href="contact.html" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social" href="contact.html" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.6 4.76 5.98V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          <a class="social" href="contact.html" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.07-.6.07-.6 1 .07 1.5 1.05 1.5 1.05.9 1.55 2.4 1.1 3 .85.1-.66.35-1.1.63-1.36-2.2-.26-4.6-1.13-4.6-5.03 0-1.1.4-2 1.03-2.72-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.04a9.4 9.4 0 0 1 5 0c1.9-1.3 2.74-1.04 2.74-1.04.55 1.4.2 2.44.1 2.7.64.72 1.03 1.62 1.03 2.72 0 3.9-2.4 4.76-4.6 5.02.36.32.68.94.68 1.9v2.8c0 .3.18.63.7.52A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul class="footer__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="workshops.html">Workshops</a></li>
+          <li><a href="projects.html">Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Community</h5>
+        <ul class="footer__list">
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="blog.html">AI News</a></li>
+          <li><a href="contact.html">Contact &amp; join</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Your data</h5>
+        <p class="small">Your preferences, shortlist and form drafts stay in your own browser. Nothing is sent to a server, and there is no tracking.</p>
+        <button class="btn btn--line btn--sm mt-2" type="button" data-open-storage>See what's saved</button>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span data-year>2026</span> IntelliLab Society. Built for UCCD2323 Front-End Web Development.</span>
+      <span>Universiti Tunku Abdul Rahman</span>
+    </div>
+  </div>
+</footer>
+
+<button class="icon-btn totop" id="toTop" type="button" aria-label="Back to top"></button>
+<div class="toasts" aria-live="polite"></div>
+
+<!-- ===================== STORAGE INSPECTOR MODAL (shared) ============== -->
+<div class="modal" id="storageModal" role="dialog" aria-modal="true" aria-labelledby="storageModalTitle">
+  <div class="modal__box">
+    <div class="modal__head">
+      <h3 id="storageModalTitle" style="margin:0;font-size:1.15rem">What's saved on this device</h3>
+      <button class="icon-btn" type="button" data-close-modal aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal__body" id="storageModalBody"></div>
+  </div>
+</div>
+
+<!-- ===================== SIGN IN / REGISTER MODAL (shared) ============== -->
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+  <div class="modal__box" style="width:min(460px,100%)">
+    <div class="modal__head">
+      <h3 id="authModalTitle" style="margin:0;font-size:1.15rem">Member area</h3>
+      <button class="icon-btn" type="button" data-close-auth aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal__body">
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab is-active" type="button" role="tab" data-auth-tab="signin" aria-selected="true">Sign in</button>
+        <button class="auth-tab" type="button" role="tab" data-auth-tab="register" aria-selected="false">Create account</button>
+      </div>
+
+      <!-- ===== SIGN IN ===== -->
+      <div class="auth-pane" data-auth-pane="signin" id="authSignin" role="tabpanel">
+        <div class="auth-alert" data-auth-error role="alert"></div>
+        <form id="signinForm" data-validate novalidate>
+          <div class="field">
+            <label for="siEmail">Email</label>
+            <input class="input" type="email" id="siEmail" name="siEmail" required autocomplete="email" placeholder="you@1utar.my">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="siPassword">Password</label>
+            <input class="input" type="password" id="siPassword" name="siPassword" required autocomplete="current-password" placeholder="Your password">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="siRemember" name="siRemember" checked>
+              <span>Keep me signed in on this device</span>
+            </label>
+            <span class="hint">Ticked, we keep you signed in for 30 days. Unticked, you are signed out as soon as you close the tab — the safer choice on a shared lab computer.</span>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Sign in</button>
+        </form>
+        <div class="auth-note">
+          <strong>Demonstration only.</strong> Accounts live entirely in your own browser — there is no server behind this. Your password is scrambled beyond recovery before it is saved, so it is never stored in readable form. Even so, a login checked in the browser is not real security: please use a throwaway password, not one you use elsewhere.
+        </div>
+      </div>
+
+      <!-- ===== CREATE ACCOUNT ===== -->
+      <div class="auth-pane" data-auth-pane="register" id="authRegister" role="tabpanel" hidden>
+        <div class="auth-alert" data-auth-error role="alert"></div>
+        <form id="registerForm" data-validate novalidate>
+          <div class="field">
+            <label for="ruName">Full name</label>
+            <input class="input" type="text" id="ruName" name="ruName" required autocomplete="name" placeholder="Jane Tan">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruEmail">Email</label>
+            <input class="input" type="email" id="ruEmail" name="ruEmail" required autocomplete="email" placeholder="you@1utar.my">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruPassword">Password</label>
+            <input class="input" type="password" id="ruPassword" name="ruPassword" required data-min="8" autocomplete="new-password" placeholder="At least 8 characters">
+            <div class="pw-meter" aria-hidden="true" id="pwMeter"><span></span></div>
+            <span class="hint">At least 8 characters.</span>
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruConfirm">Confirm password</label>
+            <input class="input" type="password" id="ruConfirm" name="ruConfirm" required autocomplete="new-password" placeholder="Type it again">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="ruRemember" name="ruRemember" checked>
+              <span>Keep me signed in on this device</span>
+            </label>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="ruTerms" name="ruTerms" required>
+              <span>I agree to the club code of conduct and code of ethics.</span>
+            </label>
+            <span class="err"></span>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Create account</button>
+        </form>
+        <div class="auth-note">
+          Membership is free. Your details never leave this browser — use a throwaway password, not one you use elsewhere.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/site.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/events-data.js"></script>
+<script>
+/* ---------------- index.html page script ---------------------------------
+   Feature owner: Member A — COOKIES (theme, display name, visit counter)
+   ------------------------------------------------------------------------ */
+$(function () {
+
+  /* --- Live preview of what is currently stored ------------------------- */
+  function refreshPreview() {
+    $('#pvTheme').text(Cookie.get('ils_theme') || 'dark (default)');
+    $('#pvName').text(Visitor.name() || '(not set)');
+    $('#pvVisits').text(Visitor.count());
+    $('#pvSaved').text(Saved.all().length + ' item(s)');
+  }
+  refreshPreview();
+  $('#displayName').val(Visitor.name());
+
+  /* --- Save the display name into a cookie ------------------------------ */
+  $('#saveName').on('click', function () {
+    var name = $.trim($('#displayName').val());
+    if (!name) { toast('Type a name first, then click save.', 'err'); $('#displayName').focus(); return; }
+    Visitor.setName(name);
+    refreshPreview();
+    toast('Thanks — we will call you ' + name + ' from now on.', 'ok');
+  });
+  $('#displayName').on('keydown', function (e) { if (e.key === 'Enter') $('#saveName').click(); });
+
+  $('#setNameBtn').on('click', function () {
+    document.getElementById('personalise').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function () { $('#displayName').focus(); }, 500);
+  });
+
+  /* --- Clear every cookie we set ---------------------------------------- */
+  $('#resetVisitor').on('click', function () {
+    Visitor.clear();
+    $('#displayName').val('');
+    refreshPreview();
+    toast('We have forgotten you. Reload the page to start fresh.', 'info');
+  });
+
+  /* Keep the counter in sync when items are saved on other pages */
+  document.addEventListener('saved:changed', refreshPreview);
+  $('[data-open-storage]').on('click', refreshPreview);
+
+  /* --- Countdown that can never sit at zero -----------------------------
+     Reads the SAME schedule as events.html from js/events-data.js, so the
+     event name, date and remaining time always match between the two pages.
+     nextClubEvent() re-evaluates on every tick, so a passed date is skipped
+     automatically — the direct fix for the frozen timer we documented in the
+     literature review.                                                     */
+  function tick() {
+    var e = nextClubEvent();
+    $('#homeEventName').text(e.name);
+    $('#homeEventWhen').text(formatEventDate(e.date) + ' · ' + e.place);
+    renderCountdown('#homeCountdown', e.date);
+  }
+  tick();
+  setInterval(tick, 1000);
+});
+</script>
+</body>
+</html>
