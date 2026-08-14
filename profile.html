@@ -89,6 +89,7 @@
       <span class="eyebrow">Member area</span>
       <h1>Sign in to see <span class="gradient-text">your profile</span></h1>
       <p class="lead">Your saved projects, workshop bookmarks and event registrations all live here. Creating an account takes about fifteen seconds and needs nothing but a name and an email.</p>
+      <p class="small" data-auth-mode style="max-width:60ch"></p>
       <div class="flex flex-wrap mt-3" style="gap:.7rem">
         <button class="btn btn--primary" type="button" data-open-auth="signin">Sign in</button>
         <button class="btn btn--ghost" type="button" data-open-auth="register">Create an account</button>
@@ -214,7 +215,8 @@
             <dt>Signed in since</dt><dd id="pfSince">—</dd>
             <dt>Member since</dt><dd id="pfJoined">—</dd>
             <dt>Stay signed in</dt><dd id="pfSessionKind">—</dd>
-            <dt>Your password</dt><dd>Scrambled before saving</dd>
+            <dt>Account stored</dt><dd id="pfWhere">—</dd>
+            <dt>Your password</dt><dd>Never stored in readable form</dd>
           </dl>
           <p class="tiny mt-3" id="pfSessionNote"></p>
           <button class="btn btn--line btn--sm btn--block mt-2" type="button" data-open-storage>See what's saved on this device</button>
@@ -337,9 +339,7 @@
           </div>
           <button class="btn btn--primary btn--block" type="submit">Sign in</button>
         </form>
-        <div class="auth-note">
-          <strong>Demonstration only.</strong> Accounts live entirely in your own browser — there is no server behind this. Your password is scrambled beyond recovery before it is saved, so it is never stored in readable form. Even so, a login checked in the browser is not real security: please use a throwaway password, not one you use elsewhere.
-        </div>
+        <div class="auth-note" data-auth-mode></div>
       </div>
 
       <!-- ===== CREATE ACCOUNT ===== -->
@@ -384,7 +384,7 @@
           <button class="btn btn--primary btn--block" type="submit">Create account</button>
         </form>
         <div class="auth-note">
-          Membership is free. Your details never leave this browser — use a throwaway password, not one you use elsewhere.
+          Membership is free and takes about fifteen seconds. Use a password you do not use anywhere else.
         </div>
       </div>
     </div>
@@ -392,6 +392,8 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/firebase-config.js"></script>
+<script type="module" src="js/firebase-init.js"></script>
 <script src="js/site.js"></script>
 <script src="js/auth.js"></script>
 <script>
@@ -470,7 +472,10 @@ $(function () {
     $('#pfSince').text(new Date(u.lastLogin).toLocaleString());
 
     var kind = Auth.sessionKind();
-    $('#pfSessionKind').text(kind === 'cookie' ? 'Yes, for 30 days' : kind ? 'Only until this tab closes' : 'Not signed in');
+    $('#pfSessionKind').text(kind === 'cookie' ? 'Yes, on this device' : kind ? 'Only until this tab closes' : 'Not signed in');
+    $('#pfWhere').text(Auth.isCloud()
+      ? 'On our server — sign in from any device'
+      : 'In this browser only');
     $('#pfSessionNote').html(kind === 'cookie'
       ? 'You chose to stay signed in, so you will still be signed in for the next 30 days even if you close the browser completely.'
       : 'You did not choose to stay signed in, so closing this tab will sign you out automatically — the safer choice on a shared computer.');
@@ -484,6 +489,11 @@ $(function () {
   renderAll();
   document.addEventListener('auth:changed', renderAll);
   document.addEventListener('saved:changed', renderSaved);
+  document.addEventListener('registrations:changed', renderRegs);
+
+  /* Registrations arrive asynchronously from the server, so ask for a fresh
+     copy once we know who is signed in. */
+  if (Auth.isSignedIn()) Auth.refreshRegistrations();
 
   /* Guests arriving via a direct link get the sign-in modal opened for them */
   if (!Auth.isSignedIn()) {
