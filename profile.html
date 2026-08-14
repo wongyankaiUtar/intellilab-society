@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Your IntelliLab member profile: saved workshops and projects, event registrations, account details and preferences.">
+<meta name="author" content="IntelliLab Society">
+<title>My Profile — IntelliLab Society</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366F1'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>i</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+<div class="scroll-progress"></div>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">iL</span>
+      <span>IntelliLab Society<span class="brand__sub">AI &amp; Innovation Club</span></span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Main navigation">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="workshops.html">Workshops</a>
+      <a class="nav__link" href="projects.html">Projects</a>
+      <a class="nav__link" href="events.html">Events</a>
+      <a class="nav__link" href="gallery.html">Gallery</a>
+      <a class="nav__link" href="blog.html">AI News</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle colour theme"></button>
+
+      <!-- Signed out: shown only to guests -->
+      <button class="btn btn--primary btn--sm" type="button" data-auth-guest data-open-auth="signin" hidden>Sign in</button>
+
+      <!-- Signed in: member menu -->
+      <div class="usermenu" data-auth-user hidden>
+        <button class="usermenu__trigger" id="userMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="userMenuPanel">
+          <span class="usermenu__avatar" data-user-initials aria-hidden="true">?</span>
+          <span class="usermenu__name" data-user-name>Member</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="usermenu__panel" id="userMenuPanel" role="menu">
+          <div class="usermenu__head">
+            <strong data-user-fullname>Member</strong>
+            <span data-user-email>member@example.com</span>
+          </div>
+          <a class="usermenu__item" role="menuitem" href="profile.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            My profile
+          </a>
+          <a class="usermenu__item" role="menuitem" href="profile.html#saved">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            Saved items
+            <span class="usermenu__badge" data-saved-count>0</span>
+          </a>
+          <a class="usermenu__item" role="menuitem" href="profile.html#registrations">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+            My registrations
+          </a>
+          <div class="usermenu__sep"></div>
+          <button class="usermenu__item usermenu__item--danger" role="menuitem" type="button" data-sign-out>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+
+      <button class="icon-btn nav__toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">My profile</span>
+    </nav>
+
+    <!-- Shown to guests -->
+    <div data-requires-guest hidden>
+      <span class="eyebrow">Member area</span>
+      <h1>Sign in to see <span class="gradient-text">your profile</span></h1>
+      <p class="lead">Your saved projects, workshop bookmarks and event registrations all live here. Creating an account takes about fifteen seconds and needs nothing but a name and an email.</p>
+      <div class="flex flex-wrap mt-3" style="gap:.7rem">
+        <button class="btn btn--primary" type="button" data-open-auth="signin">Sign in</button>
+        <button class="btn btn--ghost" type="button" data-open-auth="register">Create an account</button>
+      </div>
+    </div>
+
+    <!-- Shown to members -->
+    <div data-requires-auth hidden>
+      <div class="flex" style="gap:1.4rem;align-items:center;flex-wrap:wrap">
+        <span class="usermenu__avatar usermenu__avatar--lg" data-user-initials aria-hidden="true">?</span>
+        <div>
+          <span class="eyebrow">Member profile</span>
+          <h1 style="margin-bottom:.4rem"><span data-user-fullname>Member</span></h1>
+          <p class="lead mb-0" data-user-email>member@example.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GUEST STATE ================================== -->
+<section class="section" data-requires-guest hidden>
+  <div class="wrap">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">Why bother</span>
+      <h2>What an account gives you</h2>
+      <p class="lead">Not one of the four club websites we reviewed had a member area. Every visitor saw exactly the same page, and nothing was remembered.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Your saved list</h3>
+        <p>Bookmark any project or workshop and find it again here, on any page, on your next visit.</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg></div>
+        <h3>Your registrations</h3>
+        <p>Every event you sign up for is listed with the date and how you chose to attend. Cancel in one click.</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l2.4 5.5 6 .5-4.5 4 1.3 5.9L12 15.8 6.8 18.9 8.1 13 3.6 9l6-.5z"/></svg></div>
+        <h3>Faster forms</h3>
+        <p>Registration and contact forms fill in your name and email automatically once you are signed in.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MEMBER STATE ================================= -->
+<section class="section" data-requires-auth hidden>
+  <div class="wrap">
+
+    <div class="stats mb-4">
+      <div class="stat"><span class="stat__num gradient-text" id="pfSavedCount">0</span><span class="stat__label">Saved items</span></div>
+      <div class="stat"><span class="stat__num gradient-text" id="pfRegCount">0</span><span class="stat__label">Event registrations</span></div>
+      <div class="stat"><span class="stat__num gradient-text" id="pfLogins">0</span><span class="stat__label">Times signed in</span></div>
+      <div class="stat"><span class="stat__num gradient-text" id="pfDays">0</span><span class="stat__label">Days a member</span></div>
+    </div>
+
+    <div class="grid grid-2" style="gap:clamp(1.5rem,4vw,2.5rem);align-items:start">
+
+      <!-- ===== LEFT COLUMN ===== -->
+      <div class="stack">
+
+        <!-- Saved items -->
+        <div class="card" id="saved">
+          <div class="flex-between mb-3">
+            <h3 style="margin:0">Saved items</h3>
+            <button class="btn btn--line btn--sm" type="button" id="pfClearSaved">Clear all</button>
+          </div>
+          <p class="tiny mb-3">Kept on this device, so they are still here next time you visit.</p>
+          <div id="pfSavedList"></div>
+        </div>
+
+        <!-- Registrations -->
+        <div class="card" id="registrations">
+          <h3 class="mb-2">My registrations</h3>
+          <p class="tiny mb-3">Linked to your account on this device. Registering while signed out still works, it just is not listed here.</p>
+          <div id="pfRegList"></div>
+          <a class="btn btn--primary btn--block mt-3" href="events.html">Browse upcoming events</a>
+        </div>
+
+      </div>
+
+      <!-- ===== RIGHT COLUMN ===== -->
+      <div class="stack">
+
+        <!-- Account details -->
+        <div class="card">
+          <h3 class="mb-3">Account details</h3>
+          <form id="pfForm" data-validate novalidate>
+            <div class="field">
+              <label for="pfName">Display name <span class="req">*</span></label>
+              <input class="input" type="text" id="pfName" name="pfName" required>
+              <span class="err"></span>
+            </div>
+            <div class="field">
+              <label for="pfFaculty">Faculty</label>
+              <input class="input" type="text" id="pfFaculty" name="pfFaculty" placeholder="e.g. Faculty of ICT">
+            </div>
+            <div class="field">
+              <label for="pfTrack">Main interest</label>
+              <select class="select" id="pfTrack" name="pfTrack">
+                <option>Prompt Engineering</option>
+                <option>Machine Learning</option>
+                <option>NLP &amp; Language</option>
+                <option>Computer Vision</option>
+                <option>AI Ethics</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="pfBio">Short bio</label>
+              <textarea class="textarea" id="pfBio" name="pfBio" style="min-height:90px" placeholder="What are you hoping to build?"></textarea>
+            </div>
+            <button class="btn btn--primary btn--block" type="submit">Save changes</button>
+          </form>
+        </div>
+
+        <!-- Session / storage explainer -->
+        <div class="card">
+          <h3 class="mb-3">Your session</h3>
+          <dl class="kv">
+            <dt>Signed in since</dt><dd id="pfSince">—</dd>
+            <dt>Member since</dt><dd id="pfJoined">—</dd>
+            <dt>Stay signed in</dt><dd id="pfSessionKind">—</dd>
+            <dt>Your password</dt><dd>Scrambled before saving</dd>
+          </dl>
+          <p class="tiny mt-3" id="pfSessionNote"></p>
+          <button class="btn btn--line btn--sm btn--block mt-2" type="button" data-open-storage>See what's saved on this device</button>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="card" style="border-color:rgba(248,113,113,.35)">
+          <h3 class="mb-2" style="color:var(--danger)">Danger zone</h3>
+          <p class="small mb-3">Deleting your account removes your profile and registrations from this browser permanently. Saved items are kept, because they belong to the device rather than the account.</p>
+          <div class="flex flex-wrap" style="gap:.6rem">
+            <button class="btn btn--line btn--sm" type="button" data-sign-out>Sign out</button>
+            <button class="btn btn--line btn--sm" type="button" id="pfDelete" style="border-color:var(--danger);color:var(--danger)">Delete my account</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand mb-3" href="index.html">
+          <span class="brand__mark" aria-hidden="true">iL</span>
+          <span>IntelliLab Society<span class="brand__sub">AI &amp; Innovation Club</span></span>
+        </a>
+        <p class="small">A student-run community for artificial intelligence, machine learning and innovation. Open to every faculty, no prior experience needed.</p>
+        <div class="socials mt-3">
+          <a class="social" href="contact.html" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a class="social" href="contact.html" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social" href="contact.html" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.6 4.76 5.98V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          <a class="social" href="contact.html" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.07-.6.07-.6 1 .07 1.5 1.05 1.5 1.05.9 1.55 2.4 1.1 3 .85.1-.66.35-1.1.63-1.36-2.2-.26-4.6-1.13-4.6-5.03 0-1.1.4-2 1.03-2.72-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.04a9.4 9.4 0 0 1 5 0c1.9-1.3 2.74-1.04 2.74-1.04.55 1.4.2 2.44.1 2.7.64.72 1.03 1.62 1.03 2.72 0 3.9-2.4 4.76-4.6 5.02.36.32.68.94.68 1.9v2.8c0 .3.18.63.7.52A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul class="footer__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="workshops.html">Workshops</a></li>
+          <li><a href="projects.html">Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Community</h5>
+        <ul class="footer__list">
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="blog.html">AI News</a></li>
+          <li><a href="contact.html">Contact &amp; join</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Your data</h5>
+        <p class="small">Your preferences, shortlist and form drafts stay in your own browser. Nothing is sent to a server, and there is no tracking.</p>
+        <button class="btn btn--line btn--sm mt-2" type="button" data-open-storage>See what's saved</button>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span data-year>2026</span> IntelliLab Society. Built for UCCD2323 Front-End Web Development.</span>
+      <span>Universiti Tunku Abdul Rahman</span>
+    </div>
+  </div>
+</footer>
+
+<button class="icon-btn totop" id="toTop" type="button" aria-label="Back to top"></button>
+<div class="toasts" aria-live="polite"></div>
+
+<div class="modal" id="storageModal" role="dialog" aria-modal="true" aria-labelledby="storageModalTitle">
+  <div class="modal__box">
+    <div class="modal__head">
+      <h3 id="storageModalTitle" style="margin:0;font-size:1.15rem">What's saved on this device</h3>
+      <button class="icon-btn" type="button" data-close-modal aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal__body" id="storageModalBody"></div>
+  </div>
+</div>
+
+<!-- ===================== SIGN IN / REGISTER MODAL (shared) ============== -->
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+  <div class="modal__box" style="width:min(460px,100%)">
+    <div class="modal__head">
+      <h3 id="authModalTitle" style="margin:0;font-size:1.15rem">Member area</h3>
+      <button class="icon-btn" type="button" data-close-auth aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal__body">
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab is-active" type="button" role="tab" data-auth-tab="signin" aria-selected="true">Sign in</button>
+        <button class="auth-tab" type="button" role="tab" data-auth-tab="register" aria-selected="false">Create account</button>
+      </div>
+
+      <!-- ===== SIGN IN ===== -->
+      <div class="auth-pane" data-auth-pane="signin" id="authSignin" role="tabpanel">
+        <div class="auth-alert" data-auth-error role="alert"></div>
+        <form id="signinForm" data-validate novalidate>
+          <div class="field">
+            <label for="siEmail">Email</label>
+            <input class="input" type="email" id="siEmail" name="siEmail" required autocomplete="email" placeholder="you@1utar.my">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="siPassword">Password</label>
+            <input class="input" type="password" id="siPassword" name="siPassword" required autocomplete="current-password" placeholder="Your password">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="siRemember" name="siRemember" checked>
+              <span>Keep me signed in on this device</span>
+            </label>
+            <span class="hint">Ticked, we keep you signed in for 30 days. Unticked, you are signed out as soon as you close the tab — the safer choice on a shared lab computer.</span>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Sign in</button>
+        </form>
+        <div class="auth-note">
+          <strong>Demonstration only.</strong> Accounts live entirely in your own browser — there is no server behind this. Your password is scrambled beyond recovery before it is saved, so it is never stored in readable form. Even so, a login checked in the browser is not real security: please use a throwaway password, not one you use elsewhere.
+        </div>
+      </div>
+
+      <!-- ===== CREATE ACCOUNT ===== -->
+      <div class="auth-pane" data-auth-pane="register" id="authRegister" role="tabpanel" hidden>
+        <div class="auth-alert" data-auth-error role="alert"></div>
+        <form id="registerForm" data-validate novalidate>
+          <div class="field">
+            <label for="ruName">Full name</label>
+            <input class="input" type="text" id="ruName" name="ruName" required autocomplete="name" placeholder="Jane Tan">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruEmail">Email</label>
+            <input class="input" type="email" id="ruEmail" name="ruEmail" required autocomplete="email" placeholder="you@1utar.my">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruPassword">Password</label>
+            <input class="input" type="password" id="ruPassword" name="ruPassword" required data-min="8" autocomplete="new-password" placeholder="At least 8 characters">
+            <div class="pw-meter" aria-hidden="true" id="pwMeter"><span></span></div>
+            <span class="hint">At least 8 characters.</span>
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="ruConfirm">Confirm password</label>
+            <input class="input" type="password" id="ruConfirm" name="ruConfirm" required autocomplete="new-password" placeholder="Type it again">
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="ruRemember" name="ruRemember" checked>
+              <span>Keep me signed in on this device</span>
+            </label>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="ruTerms" name="ruTerms" required>
+              <span>I agree to the club code of conduct and code of ethics.</span>
+            </label>
+            <span class="err"></span>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Create account</button>
+        </form>
+        <div class="auth-note">
+          Membership is free. Your details never leave this browser — use a throwaway password, not one you use elsewhere.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/site.js"></script>
+<script src="js/auth.js"></script>
+<script>
+/* ---------------- profile.html -------------------------------------------
+   The member portal. Reads the account from localStorage and the session
+   from either a cookie or sessionStorage, depending on whether the member
+   ticked "Keep me signed in".
+   ---------------------------------------------------------------------- */
+$(function () {
+
+  var LABELS = {};   // id -> human label for saved items
+
+  /* Titles for saved ids, so the profile can show names not raw keys */
+  ['ws-prompt-101|Prompt Engineering 101','ws-agents|Building Prompt-Chained Agents',
+   'ws-ml-foundations|Machine Learning Foundations','ws-deep-learning|Neural Networks From Scratch',
+   'ws-transformers|Transformers & Fine-Tuning','ws-nlp-rag|Retrieval-Augmented Generation',
+   'ws-vision|Computer Vision in the Browser','ws-ethics|AI Ethics & Responsible Use',
+   'ws-datavis|Telling Stories With Data',
+   'pj-signglove|SignGlove','pj-campusgpt|CampusGPT','pj-leafcheck|LeafCheck',
+   'pj-fairhire|FairHire Audit','pj-notesnap|NoteSnap','pj-gridsense|GridSense',
+   'pj-voicebridge|VoiceBridge','pj-studybuddy|StudyBuddy Prompts'
+  ].forEach(function (pair) { var p = pair.split('|'); LABELS[p[0]] = p[1]; });
+
+  function esc(t) { return $('<i>').text(t).html(); }
+
+  function renderSaved() {
+    var list = Saved.all();
+    $('#pfSavedCount').text(list.length);
+    if (!list.length) {
+      $('#pfSavedList').html('<p class="small text-muted mb-0">Nothing saved yet. Look for the <strong>Save</strong> button on any workshop or project.</p>');
+      return;
+    }
+    $('#pfSavedList').html(list.map(function (id) {
+      var kind = id.indexOf('ws-') === 0 ? 'Workshop' : 'Project';
+      var page = kind === 'Workshop' ? 'workshops.html' : 'projects.html';
+      return '<div class="flex-between" style="padding:.7rem 0;border-bottom:1px solid var(--border)">' +
+        '<div><strong style="font-size:.92rem">' + esc(LABELS[id] || id) + '</strong>' +
+        '<span class="chip ' + (kind === 'Workshop' ? 'chip--brand' : 'chip--cyan') + '" style="margin-left:.5rem">' + kind + '</span></div>' +
+        '<div class="flex" style="gap:.4rem">' +
+          '<a class="btn btn--line btn--sm" href="' + page + '">View</a>' +
+          '<button class="btn btn--line btn--sm" type="button" data-unsave="' + id + '">Remove</button>' +
+        '</div></div>';
+    }).join(''));
+  }
+
+  function renderRegs() {
+    var regs = Auth.registrations();
+    $('#pfRegCount').text(regs.length);
+    if (!regs.length) {
+      $('#pfRegList').html('<p class="small text-muted mb-0">You have not registered for anything yet.</p>');
+      return;
+    }
+    $('#pfRegList').html(regs.map(function (r, i) {
+      return '<div class="flex-between" style="padding:.7rem 0;border-bottom:1px solid var(--border)">' +
+        '<div><strong style="font-size:.92rem">' + esc(r.event) + '</strong>' +
+        '<p class="tiny mb-0">' + esc(r.mode) + ' · booked ' +
+          new Date(r.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) + '</p></div>' +
+        '<button class="btn btn--line btn--sm" type="button" data-cancel="' + i + '">Cancel</button>' +
+      '</div>';
+    }).join(''));
+  }
+
+  function renderAccount() {
+    var u = Auth.current();
+    if (!u) return;
+
+    $('#pfName').val(u.name);
+    $('#pfFaculty').val(u.faculty || '');
+    $('#pfTrack').val(u.track || 'Prompt Engineering');
+    $('#pfBio').val(u.bio || '');
+
+    $('#pfLogins').text(u.logins || 1);
+    var days = Math.max(0, Math.floor((Date.now() - new Date(u.joined)) / 86400000));
+    $('#pfDays').text(days);
+    $('#pfJoined').text(new Date(u.joined).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }));
+    $('#pfSince').text(new Date(u.lastLogin).toLocaleString());
+
+    var kind = Auth.sessionKind();
+    $('#pfSessionKind').text(kind === 'cookie' ? 'Yes, for 30 days' : kind ? 'Only until this tab closes' : 'Not signed in');
+    $('#pfSessionNote').html(kind === 'cookie'
+      ? 'You chose to stay signed in, so you will still be signed in for the next 30 days even if you close the browser completely.'
+      : 'You did not choose to stay signed in, so closing this tab will sign you out automatically — the safer choice on a shared computer.');
+  }
+
+  function renderAll() {
+    if (!Auth.isSignedIn()) return;
+    renderAccount(); renderSaved(); renderRegs();
+  }
+
+  renderAll();
+  document.addEventListener('auth:changed', renderAll);
+  document.addEventListener('saved:changed', renderSaved);
+
+  /* Guests arriving via a direct link get the sign-in modal opened for them */
+  if (!Auth.isSignedIn()) {
+    setTimeout(function () { AuthUI.openModal('signin'); }, 400);
+  }
+
+  /* ---- actions --------------------------------------------------------- */
+  $(document).on('click', '[data-unsave]', function () {
+    var id = $(this).data('unsave');
+    Saved.toggle(id, LABELS[id] || id);
+  });
+
+  $(document).on('click', '[data-cancel]', function () {
+    Auth.cancelRegistration($(this).data('cancel'));
+    renderRegs();
+    toast('Registration cancelled.', 'info');
+  });
+
+  $('#pfClearSaved').on('click', function () {
+    if (!Saved.all().length) { toast('Your saved list is already empty.', 'info'); return; }
+    Saved.clear();
+  });
+
+  $('#pfForm').on('submit', function (e) {
+    e.preventDefault();
+    if (!Validate.form(this)) { toast('Please fix the highlighted fields.', 'err'); return; }
+    Auth.update({
+      name: $('#pfName').val().trim(),
+      faculty: $('#pfFaculty').val().trim(),
+      track: $('#pfTrack').val(),
+      bio: $('#pfBio').val().trim()
+    });
+    toast('Profile updated.', 'ok');
+  });
+
+  $('#pfDelete').on('click', function () {
+    if (!confirm('Delete your account permanently? Your registrations will be removed. This cannot be undone.')) return;
+    Auth.deleteAccount();
+    toast('Your account has been deleted.', 'info');
+    setTimeout(function () { location.href = 'index.html'; }, 900);
+  });
+});
+</script>
+</body>
+</html>
