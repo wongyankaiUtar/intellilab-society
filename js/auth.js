@@ -247,11 +247,11 @@ var CloudAuth = (function () {
     return map[code] || (err && err.message) || 'Something went wrong. Please try again.';
   }
 
-  function profileRef(uid) { return FB.doc(FB.db, 'users', uid); }
-  function regsRef(uid)    { return FB.collection(FB.db, 'users', uid, 'registrations'); }
+  function profileRef(uid) { return window.FB.doc(window.FB.db, 'users', uid); }
+  function regsRef(uid)    { return window.FB.collection(window.FB.db, 'users', uid, 'registrations'); }
 
   function loadProfile(user) {
-    return FB.getDoc(profileRef(user.uid)).then(function (snap) {
+    return window.FB.getDoc(profileRef(user.uid)).then(function (snap) {
       var base = {
         uid: user.uid,
         email: user.email,
@@ -265,14 +265,14 @@ var CloudAuth = (function () {
         profile = Object.assign(base, d, { uid: user.uid, email: user.email });
       } else {
         profile = base;
-        return FB.setDoc(profileRef(user.uid), profile).then(function () { return profile; });
+        return window.FB.setDoc(profileRef(user.uid), profile).then(function () { return profile; });
       }
       return profile;
     });
   }
 
   function loadRegs(uid) {
-    return FB.getDocs(FB.query(regsRef(uid), FB.orderBy('at', 'desc')))
+    return window.FB.getDocs(window.FB.query(regsRef(uid), window.FB.orderBy('at', 'desc')))
       .then(function (snap) {
         regs = [];
         snap.forEach(function (d) {
@@ -290,7 +290,7 @@ var CloudAuth = (function () {
 
     /* Called once at startup. Watches sign-in state for the whole site. */
     start: function () {
-      FB.onAuthStateChanged(FB.auth, function (user) {
+      window.FB.onAuthStateChanged(window.FB.auth, function (user) {
         ready = true;
         if (!user) { profile = null; regs = []; fire(null); return; }
         loadProfile(user)
@@ -317,16 +317,16 @@ var CloudAuth = (function () {
       if (String(password).length < 8) return Promise.reject('Your password must be at least 8 characters.');
 
       CloudAuth._remember = !!remember;
-      return FB.setPersistence(FB.auth, remember ? FB.browserLocalPersistence : FB.browserSessionPersistence)
-        .then(function () { return FB.createUserWithEmailAndPassword(FB.auth, email, password); })
+      return window.FB.setPersistence(window.FB.auth, remember ? window.FB.browserLocalPersistence : window.FB.browserSessionPersistence)
+        .then(function () { return window.FB.createUserWithEmailAndPassword(window.FB.auth, email, password); })
         .then(function (cred) {
-          return FB.updateProfile(cred.user, { displayName: name }).then(function () {
+          return window.FB.updateProfile(cred.user, { displayName: name }).then(function () {
             var p = {
               uid: cred.user.uid, email: email, name: name,
               joined: new Date().toISOString(), lastLogin: new Date().toISOString(),
               logins: 1, bio: '', faculty: '', track: 'Prompt Engineering'
             };
-            return FB.setDoc(profileRef(cred.user.uid), p).then(function () {
+            return window.FB.setDoc(profileRef(cred.user.uid), p).then(function () {
               profile = p; fire(p); return p;
             });
           });
@@ -337,13 +337,13 @@ var CloudAuth = (function () {
     login: function (email, password, remember) {
       email = String(email || '').trim().toLowerCase();
       CloudAuth._remember = !!remember;
-      return FB.setPersistence(FB.auth, remember ? FB.browserLocalPersistence : FB.browserSessionPersistence)
-        .then(function () { return FB.signInWithEmailAndPassword(FB.auth, email, password); })
+      return window.FB.setPersistence(window.FB.auth, remember ? window.FB.browserLocalPersistence : window.FB.browserSessionPersistence)
+        .then(function () { return window.FB.signInWithEmailAndPassword(window.FB.auth, email, password); })
         .then(function (cred) {
           return loadProfile(cred.user).then(function (p) {
             p.lastLogin = new Date().toISOString();
             p.logins = (p.logins || 0) + 1;
-            return FB.updateDoc(profileRef(cred.user.uid), { lastLogin: p.lastLogin, logins: p.logins })
+            return window.FB.updateDoc(profileRef(cred.user.uid), { lastLogin: p.lastLogin, logins: p.logins })
               .then(function () { profile = p; fire(p); return loadRegs(cred.user.uid).then(function () { return p; }); });
           });
         })
@@ -351,17 +351,17 @@ var CloudAuth = (function () {
     },
 
     logout: function () {
-      return FB.signOut(FB.auth).then(function () { profile = null; regs = []; fire(null); });
+      return window.FB.signOut(window.FB.auth).then(function () { profile = null; regs = []; fire(null); });
     },
 
     update: function (fields) {
-      var u = FB.auth.currentUser;
+      var u = window.FB.auth.currentUser;
       if (!u || !profile) return Promise.reject('Not signed in.');
       var patch = {};
       ['name', 'bio', 'faculty', 'track'].forEach(function (k) { if (k in fields) patch[k] = fields[k]; });
-      return FB.updateDoc(profileRef(u.uid), patch)
+      return window.FB.updateDoc(profileRef(u.uid), patch)
         .then(function () {
-          if (patch.name) return FB.updateProfile(u, { displayName: patch.name });
+          if (patch.name) return window.FB.updateProfile(u, { displayName: patch.name });
         })
         .then(function () {
           Object.assign(profile, patch);
@@ -372,15 +372,15 @@ var CloudAuth = (function () {
     },
 
     deleteAccount: function () {
-      var u = FB.auth.currentUser;
+      var u = window.FB.auth.currentUser;
       if (!u) return Promise.reject('Not signed in.');
       var uid = u.uid;
-      return FB.getDocs(regsRef(uid))
+      return window.FB.getDocs(regsRef(uid))
         .then(function (snap) {
-          return Promise.all(snap.docs.map(function (d) { return FB.deleteDoc(d.ref); }));
+          return Promise.all(snap.docs.map(function (d) { return window.FB.deleteDoc(d.ref); }));
         })
-        .then(function () { return FB.deleteDoc(profileRef(uid)); })
-        .then(function () { return FB.deleteUser(u); })
+        .then(function () { return window.FB.deleteDoc(profileRef(uid)); })
+        .then(function () { return window.FB.deleteUser(u); })
         .then(function () { profile = null; regs = []; fire(null); })
         .catch(function (e) {
           if (e && e.code === 'auth/requires-recent-login') {
@@ -391,10 +391,10 @@ var CloudAuth = (function () {
     },
 
     addRegistration: function (entry) {
-      var u = FB.auth.currentUser;
+      var u = window.FB.auth.currentUser;
       if (!u) return Promise.resolve(false);
       var rec = { event: entry.event, mode: entry.mode, notes: entry.notes || '', at: new Date().toISOString() };
-      return FB.addDoc(regsRef(u.uid), rec)
+      return window.FB.addDoc(regsRef(u.uid), rec)
         .then(function (ref) {
           regs.unshift(Object.assign({ id: ref.id }, rec));
           document.dispatchEvent(new CustomEvent('registrations:changed'));
@@ -406,15 +406,15 @@ var CloudAuth = (function () {
     registrations: function () { return regs; },
 
     refreshRegistrations: function () {
-      var u = FB.auth.currentUser;
+      var u = window.FB.auth.currentUser;
       return u ? loadRegs(u.uid) : Promise.resolve([]);
     },
 
     cancelRegistration: function (index) {
-      var u = FB.auth.currentUser;
+      var u = window.FB.auth.currentUser;
       var target = regs[index];
       if (!u || !target) return Promise.resolve(false);
-      return FB.deleteDoc(FB.doc(FB.db, 'users', u.uid, 'registrations', target.id))
+      return window.FB.deleteDoc(window.FB.doc(window.FB.db, 'users', u.uid, 'registrations', target.id))
         .then(function () {
           regs.splice(index, 1);
           document.dispatchEvent(new CustomEvent('registrations:changed'));
@@ -668,14 +668,77 @@ var AuthUI = {
 
 /* ============================================================================
    STARTUP — choose the backend, then wire the UI
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', function () {
-  var useCloud = !!(window.FB && window.FB.auth);
-  Auth.use(useCloud ? 'cloud' : 'local');
+   ----------------------------------------------------------------------------
+   The Firebase bridge loads the SDK over the network, so it may finish either
+   before or after DOMContentLoaded depending on connection speed. We therefore
+   never assume: we start with whatever is available, and upgrade to the cloud
+   backend the moment the bridge reports success.
 
-  if (!useCloud && window.FB_STATUS && window.FIREBASE_READY) {
-    console.warn('[IntelliLab] ' + window.FB_STATUS.reason);
+   Getting this wrong is what made the site sit in "browser-only" mode even
+   though Firebase was configured correctly.
+   ========================================================================== */
+(function () {
+
+  var uiReady = false;
+
+  function pickBackend() {
+    return (window.FB && window.FB.auth) ? 'cloud' : 'local';
   }
 
-  AuthUI.init();
-});
+  function log(msg) {
+    if (window.console && console.info) console.info('[IntelliLab] ' + msg);
+  }
+
+  /* 1. When the DOM is ready, wire the UI with whatever backend exists now. */
+  document.addEventListener('DOMContentLoaded', function () {
+    var mode = pickBackend();
+    Auth.use(mode);
+    AuthUI.init();
+    uiReady = true;
+    log('accounts running in ' + mode + ' mode.');
+
+    if (mode === 'local' && window.FIREBASE_READY) {
+      log('Firebase is configured but still loading — will switch over when ready.');
+    }
+  });
+
+  function upgradeToCloud(why) {
+    if (!uiReady || Auth.isCloud() || !(window.FB && window.FB.auth)) return false;
+    Auth.use('cloud');
+    AuthUI.paintMode();
+    AuthUI.paint();
+    log('switched to cloud accounts — ' + why);
+    return true;
+  }
+
+  /* 2. If the bridge finishes later, upgrade without a page reload. */
+  document.addEventListener('firebase:status', function (e) {
+    var s = e.detail || {};
+    if (!s.ok) {
+      if (window.FIREBASE_READY) console.warn('[IntelliLab] ' + s.reason);
+      return;
+    }
+    upgradeToCloud(s.reason);
+  });
+
+  /* 3. Safety net. If the event is ever missed — an old browser that cannot
+     run the module, a blocked CDN that resolves late, a script error — poll
+     briefly for the bridge rather than silently staying in fallback mode. */
+  window.addEventListener('load', function () {
+    if (!window.FIREBASE_READY) return;
+
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      if (upgradeToCloud('detected after ' + tries + ' check(s)') || tries >= 20) {
+        clearInterval(timer);
+        if (!Auth.isCloud() && tries >= 20) {
+          console.warn('[IntelliLab] Firebase was configured but never became available. ' +
+                       'Accounts are running in browser-only fallback mode. ' +
+                       (window.FB_STATUS ? window.FB_STATUS.reason : 'No status was reported — check for a script error above.'));
+        }
+      }
+    }, 250);   // up to 5 seconds
+  });
+
+})();
