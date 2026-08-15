@@ -474,11 +474,22 @@ var Auth = (function () {
    ========================================================================== */
 var AuthUI = {
 
+  /* Show or hide an element reliably.
+     The `hidden` attribute alone is not enough: it is only `display:none` in
+     the browser's default stylesheet, so any class that sets `display` (our
+     .btn sets `display:inline-flex`) overrides it and the element stays on
+     screen. We therefore also toggle the .hidden utility class, which carries
+     `!important` and always wins. */
+  toggle: function (el, visible) {
+    el.hidden = !visible;
+    el.classList.toggle('hidden', !visible);
+  },
+
   paint: function () {
     var user = Auth.current();
 
-    document.querySelectorAll('[data-auth-guest]').forEach(function (el) { el.hidden = !!user; });
-    document.querySelectorAll('[data-auth-user]').forEach(function (el) { el.hidden = !user; });
+    document.querySelectorAll('[data-auth-guest]').forEach(function (el) { AuthUI.toggle(el, !user); });
+    document.querySelectorAll('[data-auth-user]').forEach(function (el) { AuthUI.toggle(el, !!user); });
 
     if (user) {
       document.querySelectorAll('[data-user-initials]').forEach(function (el) { el.textContent = Auth.initials(user.name); });
@@ -487,8 +498,8 @@ var AuthUI = {
       document.querySelectorAll('[data-user-email]').forEach(function (el) { el.textContent = user.email; });
     }
 
-    document.querySelectorAll('[data-requires-auth]').forEach(function (el) { el.hidden = !user; });
-    document.querySelectorAll('[data-requires-guest]').forEach(function (el) { el.hidden = !!user; });
+    document.querySelectorAll('[data-requires-auth]').forEach(function (el) { AuthUI.toggle(el, !!user); });
+    document.querySelectorAll('[data-requires-guest]').forEach(function (el) { AuthUI.toggle(el, !user); });
   },
 
   /* Tells the visitor, in the sign-in dialog, whether accounts are shared
