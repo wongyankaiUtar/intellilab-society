@@ -85,24 +85,36 @@
   <div class="wrap hero__inner">
     <div class="reveal is-in">
       <span class="chip chip--cyan chip--dot mb-3">Open for 2026 intake</span>
-      <h1>Learn AI by <span class="gradient-text">building it</span>, not just reading about it.</h1>
-      <p class="lead">IntelliLab Society is a student-run AI &amp; Innovation Club. We run hands-on workshops in prompt engineering, machine learning, NLP and computer vision — then turn what you learn into real projects and innovation challenges.</p>
+      <h1>Learn AI by <span class="gradient-text">building it</span>.</h1>
+      <p class="lead">A student-run club for artificial intelligence, machine learning and innovation. Weekly workshops, real projects, open to every faculty.</p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="events.html">
           Register for an event
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a class="btn btn--ghost" href="projects.html">Browse student projects</a>
+        <a class="btn btn--ghost" href="projects.html">Browse projects</a>
       </div>
 
-      <!-- Personalised greeting powered by COOKIES -->
+      <!-- Personalised greeting powered by COOKIES.
+           The name field lives here so the cookie read / write / clear cycle
+           stays demonstrable without a dedicated section. -->
       <div class="card card--flat" style="padding:1.1rem 1.25rem">
         <div class="flex-between">
           <div>
             <p class="small mb-0" style="color:var(--text);font-weight:600" data-greeting>Welcome!</p>
             <p class="tiny mb-0">No account needed — we recognise you on this device.</p>
           </div>
-          <button class="btn btn--line btn--sm" type="button" id="setNameBtn">Set my name</button>
+          <button class="btn btn--line btn--sm" type="button" id="setNameBtn" aria-expanded="false" aria-controls="namePanel">Set my name</button>
+        </div>
+
+        <div id="namePanel" class="hidden" style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <label class="sr-only" for="displayName">What should we call you?</label>
+          <div class="flex flex-wrap" style="gap:.5rem">
+            <input class="input" type="text" id="displayName" placeholder="e.g. Jane Tan" maxlength="24" style="flex:1 1 170px;width:auto">
+            <button class="btn btn--primary btn--sm" type="button" id="saveName">Save</button>
+            <button class="btn btn--line btn--sm" type="button" id="resetVisitor">Forget me</button>
+          </div>
+          <p class="tiny mt-2 mb-0">Kept for 30 days so we can greet you next time.</p>
         </div>
       </div>
     </div>
@@ -141,231 +153,76 @@
   </div>
 </section>
 
-<!-- ===================== STATS ========================================= -->
+<!-- ===================== AT A GLANCE (single horizontal strip) ========== -->
 <section class="section section--tight section--alt">
   <div class="wrap">
     <div class="stats">
-      <div class="stat reveal"><span class="stat__num gradient-text" data-count="412">0</span><span class="stat__label">Active members</span></div>
-      <div class="stat reveal" data-d="1"><span class="stat__num gradient-text" data-count="38">0</span><span class="stat__label">Workshops delivered</span></div>
-      <div class="stat reveal" data-d="2"><span class="stat__num gradient-text" data-count="64">0</span><span class="stat__label">Student projects shipped</span></div>
-      <div class="stat reveal" data-d="3"><span class="stat__num gradient-text" data-count="11">0</span><span class="stat__label">Hackathons hosted</span></div>
+      <div class="stat reveal"><span class="stat__num gradient-text" data-count="412">0</span><span class="stat__label">Members</span></div>
+      <div class="stat reveal" data-d="1"><span class="stat__num gradient-text" data-count="38">0</span><span class="stat__label">Workshops run</span></div>
+      <div class="stat reveal" data-d="2"><span class="stat__num gradient-text" data-count="64">0</span><span class="stat__label">Projects shipped</span></div>
+      <div class="stat reveal" data-d="3"><span class="stat__num gradient-text" data-count="11">0</span><span class="stat__label">Hackathons</span></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== WHAT WE DO ==================================== -->
+<!-- ===================== TRACKS ======================================== -->
 <section class="section">
   <div class="wrap">
-    <div class="sec-head sec-head--center reveal">
+    <div class="sec-head reveal">
       <span class="eyebrow">What we do</span>
-      <h2>Four tracks, one community</h2>
-      <p class="lead">Most club sites we studied covered a single narrow topic. We deliberately span the whole field so every member finds a way in.</p>
+      <h2>Four tracks</h2>
+      <p class="lead">Every session ends with something running on your own machine. Beginner streams run each semester.</p>
     </div>
     <div class="grid grid-4">
       <article class="card reveal">
-        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><rect x="8" y="8" width="8" height="8" rx="2"/></svg></div>
-        <h3>Prompt Engineering</h3>
-        <p>Structured prompting, evaluation, chain-of-thought and agent design — with copy-paste starter prompts you can run the same day.</p>
+        <h4>Prompt Engineering</h4>
+        <p class="small mb-0">Structured prompting, evaluation and agent design.</p>
       </article>
       <article class="card reveal" data-d="1">
-        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l4-8 4 5 3-6 4 9"/><path d="M3 21h18"/></svg></div>
-        <h3>Machine Learning</h3>
-        <p>From regression to transformers. Every session ships with a notebook and a real dataset — no theory-only lectures.</p>
+        <h4>Machine Learning</h4>
+        <p class="small mb-0">Regression to transformers, with notebooks and real datasets.</p>
       </article>
       <article class="card reveal" data-d="2">
-        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/></svg></div>
-        <h3>NLP &amp; Language</h3>
-        <p>Tokenisation, embeddings, retrieval-augmented generation and building assistants that actually answer correctly.</p>
+        <h4>NLP &amp; Language</h4>
+        <p class="small mb-0">Embeddings, retrieval, and assistants that answer correctly.</p>
       </article>
       <article class="card reveal" data-d="3">
-        <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg></div>
-        <h3>Computer Vision</h3>
-        <p>Detection, segmentation and on-device inference — including an ethics module on surveillance and consent.</p>
+        <h4>Computer Vision</h4>
+        <p class="small mb-0">Detection, segmentation and on-device inference.</p>
       </article>
     </div>
-  </div>
-</section>
-
-<!-- ===================== PERSONALISATION / STORAGE DEMO ================= -->
-<section class="section section--alt" id="personalise">
-  <div class="wrap">
-    <div class="grid grid-2" style="align-items:center;gap:clamp(2rem,5vw,3.5rem)">
-      <div class="reveal">
-        <span class="eyebrow">Built for you</span>
-        <h2>The site remembers you — <span class="gradient-text">no account needed</span></h2>
-        <p class="lead">Every website we reviewed showed identical content to everyone and forgot you the moment you left. IntelliLab picks up where you left off — without ever asking you to create an account.</p>
-
-        <div class="stack mt-3">
-          <div class="card card--flat" style="padding:1.1rem 1.25rem">
-            <div class="flex" style="gap:.9rem;align-items:flex-start">
-              <span class="chip chip--brand">Your look</span>
-              <p class="small mb-0">Light or dark, and the name you go by. We keep it for 30 days, so it is still here even after you close the browser completely.</p>
-            </div>
-          </div>
-          <div class="card card--flat" style="padding:1.1rem 1.25rem">
-            <div class="flex" style="gap:.9rem;align-items:flex-start">
-              <span class="chip chip--cyan">Your shortlist</span>
-              <p class="small mb-0">Projects and workshops you bookmark. You have <strong data-saved-count>0</strong> saved right now, and they stay until you clear them.</p>
-            </div>
-          </div>
-          <div class="card card--flat" style="padding:1.1rem 1.25rem">
-            <div class="flex" style="gap:.9rem;align-items:flex-start">
-              <span class="chip chip--amber">Your drafts</span>
-              <p class="small mb-0">Half-finished registration and contact forms. Wander off to another page and come back — your text is still waiting. Closing the tab clears it.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap mt-3" style="gap:.7rem">
-          <button class="btn btn--primary btn--sm" type="button" data-open-storage>See what's saved</button>
-          <button class="btn btn--line btn--sm" type="button" id="resetVisitor">Forget me</button>
-        </div>
-      </div>
-
-      <div class="card card--pad-lg reveal" data-d="1">
-        <h4 class="mb-3">Try it right now</h4>
-        <div class="field">
-          <label for="displayName">What should we call you?</label>
-          <input class="input" type="text" id="displayName" placeholder="e.g. Jane Tan" maxlength="24">
-          <span class="hint">We'll greet you by name next time you visit.</span>
-        </div>
-        <button class="btn btn--primary btn--block" type="button" id="saveName">Save</button>
-        <hr style="border:0;border-top:1px solid var(--border);margin:1.5rem 0">
-        <h5 class="mb-2">What we remember about you</h5>
-        <dl class="kv" id="livePreview">
-          <dt>Appearance</dt><dd id="pvTheme">—</dd>
-          <dt>Your name</dt><dd id="pvName">—</dd>
-          <dt>Visits</dt><dd id="pvVisits">—</dd>
-          <dt>Shortlisted</dt><dd id="pvSaved">—</dd>
-        </dl>
-      </div>
-    </div>
+    <p class="small mt-3 reveal">Every track includes an ethics component — bias, consent, attribution and compute cost.
+      <a href="workshops.html">See the full schedule</a>.</p>
   </div>
 </section>
 
 <!-- ===================== NEXT UP (live countdown) ======================= -->
-<section class="section">
-  <div class="wrap">
-    <div class="card card--pad-lg reveal">
-      <div class="flex-between mb-3">
-        <div>
-          <span class="eyebrow">Next up</span>
-          <h2 style="margin-bottom:.4rem" id="homeEventName">—</h2>
-          <p class="small mb-1" id="homeEventWhen" style="color:var(--text);font-weight:600">—</p>
-          <p class="small mb-0">A live countdown that always shows a real, upcoming date — it rolls forward automatically and never sits at zero.</p>
-        </div>
-        <a class="btn btn--primary" href="events.html">See all events</a>
-      </div>
-      <div class="countdown" id="homeCountdown" role="timer" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WHY DIFFERENT ================================= -->
 <section class="section section--alt">
   <div class="wrap">
-    <div class="sec-head sec-head--center reveal">
-      <span class="eyebrow">Why we're different</span>
-      <h2>We fixed what the other club sites got wrong</h2>
-      <p class="lead">Our team reviewed four existing AI club and AI education websites. Every gap we found became a feature here.</p>
-    </div>
-    <div class="grid grid-3">
-      <article class="card reveal">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>Content that updates itself</h4>
-        <p>Those sites relied on someone remembering to update them, so information went stale — one even had a countdown frozen at 00:00:00. Our AI News page refreshes itself every time you open it.</p>
-      </article>
-      <article class="card reveal" data-d="1">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>You can actually sign up</h4>
-        <p>Most offered a single email address and nothing else. We have validated registration and contact forms that keep your draft as you type.</p>
-      </article>
-      <article class="card reveal" data-d="2">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>Real people, real credibility</h4>
-        <p>One club site had no About page or committee at all. Ours introduces every officer, our history, and how to reach us.</p>
-      </article>
-      <article class="card reveal">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>Search and filter everywhere</h4>
-        <p>Finding a specific resource meant scrolling forever. Workshops, projects, gallery and news are all filterable and searchable.</p>
-      </article>
-      <article class="card reveal" data-d="1">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>Genuinely responsive</h4>
-        <p>One reviewed site misaligned badly at other resolutions. Ours is built mobile-first on a fluid grid and tested from 360px upward.</p>
-      </article>
-      <article class="card reveal" data-d="2">
-        <span class="chip chip--green chip--dot mb-2">Fixed</span>
-        <h4>Social, not siloed</h4>
-        <p>None of them embedded social media. Our Contact page carries a live social feed and one-tap sharing on every article.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== HOW THIS SITE WORKS ==========================
-     The single place on the site where the underlying technology is named.
-     Everything else speaks plain English to visitors; the technical detail
-     lives here and in the storage inspector, clearly signposted as such.
-     ================================================================== -->
-<section class="section" id="how-it-works">
-  <div class="wrap">
-    <div class="sec-head sec-head--center reveal">
-      <span class="eyebrow">For the curious</span>
-      <h2>How this site works</h2>
-      <p class="lead">We are an AI club, so it would be odd to hide the engineering. Here is what runs underneath — and what we do with your data, which is very little.</p>
-    </div>
-
-    <div class="grid grid-3">
-      <article class="card reveal">
-        <span class="chip chip--brand mb-2">Cookies</span>
-        <h4>Your appearance and name</h4>
-        <p>Your light/dark choice, the name you gave us and a visit counter are stored in cookies with a 30-day expiry. Cookies are the only one of the three that survives closing the browser entirely.</p>
-      </article>
-      <article class="card reveal" data-d="1">
-        <span class="chip chip--cyan mb-2">localStorage</span>
-        <h4>Your shortlist and account</h4>
-        <p>Bookmarked projects and workshops, plus your member account if you created one, live in localStorage. It persists indefinitely on this device until you clear it.</p>
-      </article>
-      <article class="card reveal" data-d="2">
-        <span class="chip chip--amber mb-2">sessionStorage</span>
-        <h4>Your unfinished forms</h4>
-        <p>Draft registration and contact forms use sessionStorage, which the browser wipes when the tab closes. On a shared lab machine that means your details are never left behind.</p>
-      </article>
-      <article class="card reveal">
-        <span class="chip chip--green mb-2">REST APIs</span>
-        <h4>Content that updates itself</h4>
-        <p>The AI News page queries the Hacker News API and the Projects page queries the GitHub API, both through jQuery <code>$.ajax()</code>. Nobody on the committee edits those sections by hand.</p>
-      </article>
-      <article class="card reveal" data-d="1">
-        <span class="chip mb-2">Front end</span>
-        <h4>HTML5, CSS3, JavaScript</h4>
-        <p>One stylesheet drives all nine pages, built on a fluid grid with CSS custom properties for theming. Every illustration is hand-written SVG rather than stock photography.</p>
-      </article>
-      <article class="card reveal" data-d="2">
-        <span class="chip mb-2">Privacy</span>
-        <h4>Nothing leaves your browser</h4>
-        <p>There is no server and no analytics. Everything described above is stored on your own device, and you can inspect or delete all of it at any time.</p>
-      </article>
-    </div>
-
-    <div class="text-center mt-4 reveal">
-      <button class="btn btn--primary" type="button" data-open-storage>Inspect everything stored on your device</button>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CTA =========================================== -->
-<section class="section">
-  <div class="wrap">
-    <div class="card card--pad-lg text-center reveal" style="background:linear-gradient(135deg, rgba(99,102,241,.16), rgba(34,211,238,.10))">
-      <h2 class="mb-2">Ready to build something?</h2>
-      <p class="lead" style="max-width:52ch;margin:0 auto 1.8rem">Membership is free for all students. Come to one session, no commitment — most people stay.</p>
-      <div class="flex-center flex-wrap">
-        <a class="btn btn--primary" href="contact.html">Join the club</a>
-        <a class="btn btn--ghost" href="workshops.html">See the workshop schedule</a>
+    <div class="flex-between mb-3 reveal">
+      <div>
+        <span class="eyebrow">Next up</span>
+        <h2 style="margin-bottom:.3rem" id="homeEventName">—</h2>
+        <p class="small mb-0" id="homeEventWhen" style="color:var(--text);font-weight:600">—</p>
       </div>
+      <a class="btn btn--primary" href="events.html">All events</a>
+    </div>
+    <div class="countdown reveal" id="homeCountdown" role="timer" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ===================== COLOPHON =======================================
+     One compact strip. The only place the underlying technology is named,
+     kept short so it reads as a footnote rather than a sales pitch.
+     ================================================================== -->
+<section class="section section--tight" id="how-it-works">
+  <div class="wrap">
+    <div class="flex-between reveal" style="gap:1.5rem">
+      <div style="flex:1 1 340px">
+        <span class="eyebrow">Colophon</span>
+        <p class="small mb-0">Your theme and shortlist stay on this device in cookies and localStorage. Unfinished forms are held in sessionStorage and cleared when you close the tab. AI news and project data load live from public APIs; accounts are handled by Firebase.</p>
+      </div>
+      <button class="btn btn--line btn--sm" type="button" data-open-storage>See what's saved</button>
     </div>
   </div>
 </section>
@@ -409,7 +266,7 @@
       </div>
       <div>
         <h5>Your data</h5>
-        <p class="small">Your preferences, shortlist and form drafts stay in your own browser. Nothing is sent to a server, and there is no tracking.</p>
+        <p class="small">Your preferences, shortlist and form drafts stay in your own browser. Only your account details and event bookings are held on a server, and you can delete them any time.</p>
         <button class="btn btn--line btn--sm mt-2" type="button" data-open-storage>See what's saved</button>
       </div>
     </div>
@@ -539,42 +396,31 @@
    ------------------------------------------------------------------------ */
 $(function () {
 
-  /* --- Live preview of what is currently stored ------------------------- */
-  function refreshPreview() {
-    $('#pvTheme').text(Cookie.get('ils_theme') || 'dark (default)');
-    $('#pvName').text(Visitor.name() || '(not set)');
-    $('#pvVisits').text(Visitor.count());
-    $('#pvSaved').text(Saved.all().length + ' item(s)');
-  }
-  refreshPreview();
+  /* --- COOKIES: greet by name, remember, and forget --------------------- */
   $('#displayName').val(Visitor.name());
 
-  /* --- Save the display name into a cookie ------------------------------ */
+  $('#setNameBtn').on('click', function () {
+    var panel = $('#namePanel');
+    var open = panel.hasClass('hidden');
+    panel.toggleClass('hidden', !open);
+    $(this).attr('aria-expanded', open ? 'true' : 'false');
+    if (open) $('#displayName').trigger('focus');
+  });
+
   $('#saveName').on('click', function () {
     var name = $.trim($('#displayName').val());
-    if (!name) { toast('Type a name first, then click save.', 'err'); $('#displayName').focus(); return; }
-    Visitor.setName(name);
-    refreshPreview();
+    if (!name) { toast('Type a name first, then click Save.', 'err'); $('#displayName').trigger('focus'); return; }
+    Visitor.setName(name);                       // <-- COOKIE WRITE (30 days)
     toast('Thanks — we will call you ' + name + ' from now on.', 'ok');
   });
+
   $('#displayName').on('keydown', function (e) { if (e.key === 'Enter') $('#saveName').click(); });
 
-  $('#setNameBtn').on('click', function () {
-    document.getElementById('personalise').scrollIntoView({ behavior: 'smooth' });
-    setTimeout(function () { $('#displayName').focus(); }, 500);
-  });
-
-  /* --- Clear every cookie we set ---------------------------------------- */
   $('#resetVisitor').on('click', function () {
-    Visitor.clear();
+    Visitor.clear();                             // <-- COOKIE DELETE
     $('#displayName').val('');
-    refreshPreview();
     toast('We have forgotten you. Reload the page to start fresh.', 'info');
   });
-
-  /* Keep the counter in sync when items are saved on other pages */
-  document.addEventListener('saved:changed', refreshPreview);
-  $('[data-open-storage]').on('click', refreshPreview);
 
   /* --- Countdown that can never sit at zero -----------------------------
      Reads the SAME schedule as events.html from js/events-data.js, so the

@@ -653,6 +653,13 @@ p  { color: var(--text-muted); }
 .text-center{text-align:center}.text-muted{color:var(--text-muted)}
 .hidden{display:none!important}
 
+/* The HTML `hidden` attribute is only `display:none` in the browser's default
+   stylesheet, so ANY author rule that sets `display` beats it. Our .btn sets
+   `display:inline-flex`, which meant `<button hidden>` stayed visible — that is
+   why the Sign in button did not disappear after signing in.
+   This makes `hidden` mean hidden, whatever else the element is styled as. */
+[hidden]{display:none!important}
+
 /* Scroll reveal — the "immersiveness" the reviewed sites lacked */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s cubic-bezier(.2,.7,.3,1), transform .65s cubic-bezier(.2,.7,.3,1); }
 .reveal.is-in { opacity: 1; transform: none; }
