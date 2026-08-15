@@ -195,17 +195,37 @@ Theme.apply(Cookie.get('ils_theme') || 'dark');
    VISITOR — first visit vs returning visitor, tracked with COOKIES
    ------------------------------------------------------------------------ */
 var Visitor = {
-  KEY_SEEN: 'ils_visits',
-  KEY_NAME: 'ils_name',
-  KEY_LAST: 'ils_last_visit',
+  KEY_SEEN:    'ils_visits',
+  KEY_NAME:    'ils_name',
+  KEY_LAST:    'ils_last_visit',
+  KEY_COUNTED: 'ils_visit_counted',   // sessionStorage guard
 
   count: function () { return parseInt(Cookie.get(Visitor.KEY_SEEN) || '0', 10); },
   name:  function () { return Cookie.get(Visitor.KEY_NAME) || ''; },
 
+  /* Counts one VISIT, not one page view.
+     ------------------------------------------------------------------------
+     This runs on every page load. Without a guard, clicking Home -> About ->
+     Home counted three visits, which is not what "visits" means to a reader.
+
+     The fix uses two storage technologies together, and is worth explaining
+     in the presentation because it shows why they are different:
+
+       COOKIE          holds the running total. It survives closing the
+                       browser, so the count is not lost between visits.
+       sessionStorage  holds a "already counted this session" flag. The
+                       browser wipes it when the tab closes, so the next time
+                       the site is opened the counter increments exactly once.
+
+     Navigating around the site therefore leaves the number alone; closing the
+     tab and coming back adds one. */
   register: function () {
+    if (Session.get(Visitor.KEY_COUNTED, false)) return Visitor.count();
+
     var n = Visitor.count() + 1;
-    Cookie.set(Visitor.KEY_SEEN, n, 30);       // <-- COOKIE WRITE
+    Cookie.set(Visitor.KEY_SEEN, n, 30);                 // <-- COOKIE WRITE
     Cookie.set(Visitor.KEY_LAST, new Date().toISOString(), 30);
+    Session.set(Visitor.KEY_COUNTED, true);              // <-- sessionStorage
     return n;
   },
 
@@ -218,6 +238,7 @@ var Visitor = {
     Cookie.remove(Visitor.KEY_SEEN);
     Cookie.remove(Visitor.KEY_NAME);
     Cookie.remove(Visitor.KEY_LAST);
+    Session.remove(Visitor.KEY_COUNTED);   // so the next load counts as visit 1
     Visitor.paintGreeting();
   },
 
