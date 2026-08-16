@@ -565,16 +565,21 @@ p  { color: var(--text-muted); }
   position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer;
   border: 1px solid var(--border); background: var(--surface);
   transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  display: block;
 }
 .tile:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--brand); }
-.tile svg { width: 100%; display: block; }
-.tile__cap {
-  position: absolute; inset: auto 0 0 0; padding: 2.2rem .95rem .85rem;
-  background: linear-gradient(transparent, rgba(5, 8, 18, .92));
-  color: #fff; font-size: .85rem; font-weight: 600;
-  opacity: 0; transform: translateY(8px); transition: all var(--t);
-}
-.tile:hover .tile__cap { opacity: 1; transform: translateY(0); }
+
+/* Media slot — holds either the generated placeholder artwork or, once a
+   photograph is dropped into /images, a real <img>. */
+.tile__media { display: block; line-height: 0; background: var(--bg-2); }
+.tile__media svg,
+.tile__media img { width: 100%; display: block; height: auto; }
+
+/* Caption sits BELOW the image rather than floating over it, so the text is
+   always legible and never collides with anything drawn in the artwork. */
+.tile__caption { padding: .85rem 1rem 1rem; }
+.tile__caption strong { display: block; font-family: var(--font-head); font-size: .95rem; color: var(--text); margin-bottom: .2rem; }
+.tile__caption span { display: block; font-size: .82rem; color: var(--text-muted); line-height: 1.5; }
 
 .lightbox {
   position: fixed; inset: 0; z-index: 1500; display: none;
