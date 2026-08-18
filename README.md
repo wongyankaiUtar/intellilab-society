@@ -45,7 +45,7 @@ sections fall back to cached data rather than showing an empty box.
 
 ---
 
-## 2. File structure
+## 2. File structure/Site Map
 
 ```
 website/
