@@ -568,7 +568,16 @@
         renderAccount(); renderSaved(); renderRegs();
       }
 
+      /* Runs once, as soon as we genuinely know whether anybody is signed in.
+         The guard matters because this is reached two ways: the auth:ready
+         event, or the synchronous Auth.isReady() check below. Without it the
+         sign-in dialog could open twice. */
+      var authReadyHandled = false;
+
       function handleAuthReady() {
+        if (authReadyHandled) return;
+        authReadyHandled = true;
+
         renderAll();
 
         if (Auth.isSignedIn()) {
@@ -585,6 +594,14 @@
           AuthUI.closeModal();
         }
       });
+
+      /* Registrations and saved items arrive from the server AFTER the page
+         has already drawn itself, so they each announce their own arrival.
+         Without these two lines the lists render once, empty, and never
+         update — which is why a booking made on the events page did not
+         appear here. */
+      document.addEventListener('registrations:changed', renderRegs);
+      document.addEventListener('saved:changed', renderSaved);
 
       document.addEventListener('auth:ready', handleAuthReady);
 
