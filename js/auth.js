@@ -286,20 +286,37 @@ var CloudAuth = (function () {
         document.dispatchEvent(new CustomEvent('registrations:changed'));
         return regs;
       })
-      .catch(function () { regs = []; return regs; });
+      .catch(function (e) {
+        /* Say why. Silently returning an empty list here made a failed read
+           look identical to "you have not registered for anything yet". */
+        console.warn('[IntelliLab] could not load registrations', e);
+        regs = [];
+        document.dispatchEvent(new CustomEvent('registrations:changed'));
+        return regs;
+      });
   }
 
   return {
     kind: 'cloud',
 
-    /* Called once at startup. Watches sign-in state for the whole site. */
+    /* ------------------------------------------------------------------
+       Called once at startup. Watches sign-in state for the whole site.
+
+       'ready' must NOT be set until the profile document has actually come
+       back. Firebase tells us a user exists before their record has been
+       fetched, so flipping the flag here would let a page conclude that
+       nobody is signed in while the profile is still in flight.
+       ------------------------------------------------------------------ */
     start: function () {
       window.FB.onAuthStateChanged(window.FB.auth, function (user) {
-        ready = true;
-        if (!user) { profile = null; regs = []; fire(null); return; }
+        if (!user) { profile = null; regs = []; ready = true; fire(null); return; }
         loadProfile(user)
-          .then(function (p) { fire(p); return loadRegs(user.uid); })
-          .catch(function (e) { console.warn('[IntelliLab] profile load failed', e); fire(null); });
+          .then(function (p) { ready = true; fire(p); return loadRegs(user.uid); })
+          .catch(function (e) {
+            ready = true;
+            console.warn('[IntelliLab] profile load failed', e);
+            fire(null);
+          });
       });
     },
 
@@ -437,6 +454,7 @@ var CloudAuth = (function () {
    ========================================================================= */
 var Auth = (function () {
   var backend = LocalAuth;
+  var readyFired = false;
 
   function initialsOf(name) {
     var parts = String(name || '').trim().split(/\s+/).filter(Boolean);
@@ -450,10 +468,27 @@ var Auth = (function () {
     get mode() { return backend.kind; },
     isCloud: function () { return backend.kind === 'cloud'; },
 
-    /* True once the backend knows whether anybody is signed in. */
+    /* ------------------------------------------------------------------
+       True once the backend knows whether anybody is signed in.
+
+       While Firebase is configured but has not taken over yet we are NOT
+       ready, because the local backend would answer "nobody is signed in"
+       for a member whose cloud session is still being restored.
+       FIREBASE_GAVE_UP is set by the startup poller when the SDK never
+       arrives, so an offline visitor becomes ready instead of waiting
+       for ever.
+       ------------------------------------------------------------------ */
     isReady: function () {
-      if (window.FIREBASE_READY && backend.kind !== 'cloud') return false;
+      if (window.FIREBASE_READY && !window.FIREBASE_GAVE_UP && backend.kind !== 'cloud') return false;
       return backend.isReady ? backend.isReady() : true;
+    },
+
+    /* Fires 'auth:ready' once per page, when the sign-in state is known.
+       profile.html waits for this before deciding you are a guest. */
+    announceReady: function () {
+      if (readyFired) return;
+      readyFired = true;
+      document.dispatchEvent(new CustomEvent('auth:ready', { detail: backend.current() }));
     },
 
     /* ------------------------------------------------------------------
@@ -743,6 +778,11 @@ var AuthUI = {
     uiReady = true;
     log('accounts running in ' + mode + ' mode.');
 
+    /* Tell the page the moment the sign-in state is actually known.
+       Without this, 'auth:ready' never fires and profile.html never
+       renders its saved items or registrations. */
+    Auth.whenSettled(function () { Auth.announceReady(); }, 7000);
+
     if (mode === 'local' && window.FIREBASE_READY) {
       log('Firebase is configured but still loading — will switch over when ready.');
     }
@@ -779,6 +819,8 @@ var AuthUI = {
       if (upgradeToCloud('detected after ' + tries + ' check(s)') || tries >= 20) {
         clearInterval(timer);
         if (!Auth.isCloud() && tries >= 20) {
+          /* Stop waiting, so pages that need the sign-in state can proceed. */
+          window.FIREBASE_GAVE_UP = true;
           console.warn('[IntelliLab] Firebase was configured but never became available. ' +
                        'Accounts are running in browser-only fallback mode. ' +
                        (window.FB_STATUS ? window.FB_STATUS.reason : 'No status was reported — check for a script error above.'));
