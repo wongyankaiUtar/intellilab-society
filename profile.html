@@ -592,15 +592,6 @@
         handleAuthReady();
       }
 
-      /* Registrations arrive asynchronously from the server, so ask for a fresh
-         copy once we know who is signed in. */
-      if (Auth.isSignedIn()) Auth.refreshRegistrations();
-
-      /* Guests arriving via a direct link get the sign-in modal opened for them */
-      if (!Auth.isSignedIn()) {
-        setTimeout(function () { AuthUI.openModal('signin'); }, 400);
-      }
-
       /* ---- actions --------------------------------------------------------- */
       $(document).on('click', '[data-unsave]', function () {
         var id = $(this).data('unsave');

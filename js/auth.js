@@ -305,10 +305,8 @@ var LocalAuth = (function () {
 /* ===========================================================================
    BACKEND 2 — CLOUD (Firebase Authentication + Cloud Firestore)
    ========================================================================= */
-var ready = false;
 
 function announceReady() {
-  ready = true;
   document.dispatchEvent(new CustomEvent("auth:ready"));
 }
 
@@ -419,6 +417,7 @@ var CloudAuth = (function () {
         if (!user) {
           profile = null;
           regs = [];
+          ready = true;
           announceReady();
           fire(null);
           return;
@@ -434,6 +433,7 @@ var CloudAuth = (function () {
           })
           .catch(function (e) {
             console.warn("[IntelliLab] profile load failed", e);
+            ready = true;
             announceReady();
             fire(null);
           });
